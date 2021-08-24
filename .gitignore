@@ -1,3 +1,5 @@
 node_modules
 node_modules
 old/
+client/dist/bundle.js
+.eslintrc.js
