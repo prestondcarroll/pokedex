@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React, { useState } from 'react';
 import {
   createStyles,
   fade,
@@ -56,16 +56,23 @@ const styles = {
   container: {
     display: 'flex',
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    justifyContent: 'Center',
+    alignItems: 'center',
     // justifyContent: 'space-between',
   }
 };
 
-const SearchPokemon = () => {
-
-
+const SearchPokemon = (props) => {
   const classes = useStyles();
+
+  const[query, setQuery] = useState('');
+  const onChange = event => {
+    setQuery(event.target.value);
+  };
+  const onClick = (event) => {
+    // alert(`pokemon ${query} submitted`);
+    props.handleSearch(query);
+  }
 
   return (
     <div style={styles.container}>
@@ -80,9 +87,11 @@ const SearchPokemon = () => {
           input: classes.inputInput,
         }}
         inputProps={{ 'aria-label': 'search ' }}
+        value={query}
+        onChange={onChange}
       />
     </div>
-      <Button variant="contained">Default</Button>
+      <Button variant="contained" onClick={onClick}>Submit</Button>
     </div>
   );
 };
