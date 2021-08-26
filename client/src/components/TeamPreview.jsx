@@ -15,7 +15,6 @@ const styles = {
     justifyContent: 'center',
     background: 'white',
     borderRadius: 5,
-    // boxShadow: '5px 5px 5px black',
     borderStyle: 'outset',
 
     right: 0,
@@ -23,7 +22,6 @@ const styles = {
     marginRight: 'auto',
     marginLeft: 'auto',
     marginTop: 40,
-    // justifyContent: 'space-between',
   },
   item: {
     margin: '20px',
@@ -33,11 +31,6 @@ const styles = {
 
 const TeamPreview = (props) => {
   const test = 1;
-  // const [teamMembers, setTeamMembers] = useState([]);
-
-  // useEffect(() => {
-  //   setTeamMembers(props.teamMembers);
-  // }, [props.teamMembers]);
 
   return (
     <div style={styles.parent}>

@@ -11,6 +11,7 @@ const styles = {
     borderRadius: 20,
     borderStyle: 'outset',
     padding: 30,
+    fontSize: 'large',
   },
   parent: {
     display: 'flex',

@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create('width'),
       width: '100%',
@@ -63,15 +62,12 @@ const styles = {
 
     background: 'white',
     borderRadius: 5,
-    // // boxShadow: '5px 5px 5px black',
     borderStyle: 'outset',
 
     right: 0,
     left: 0,
     marginRight: 'auto',
     marginLeft: 'auto',
-    // marginTop: 40,
-    // justifyContent: 'space-between',
   }
 };
 
@@ -83,7 +79,6 @@ const SearchPokemon = (props) => {
     setQuery(event.target.value);
   };
   const onClick = (event) => {
-    // alert(`pokemon ${query} submitted`);
     props.handleSearch(query);
   }
 

@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-undef */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-use-before-define */
 /* eslint-disable max-len */
@@ -15,6 +17,7 @@ const axios = require('axios').default;
 const styles = {
   center: {
     textAlign: 'center',
+    margin: 30,
   },
   split: {
     position: 'absolute',
@@ -22,6 +25,9 @@ const styles = {
     flex: 1,
     flexDirection: 'row',
     height: 5000,
+  },
+  parent: {
+    fontFamily: 'Roboto',
   },
 };
 
@@ -115,21 +121,49 @@ const App = () => {
     }
   }, [teamMembers]);
 
-  const arrOfObj = ['Move', 'Name1', 'Name2', 'Name3', 'Name4', 'Name5', 'Name6', 'Total Weak', 'Total Resis'];
+  const capitalize = (string) => {
+    if (typeof string === 'string') {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    return '';
+  };
+
+  const arrOfObj = ['Move', 'Name1', 'Name2', 'Name3', 'Name4', 'Name5', 'Name6', 'Weak', 'Resis'];
   // const testRow = ['Type', 0, 0, 0, 0, 0, 0, 0, 0];
   const typesArr = ['normal', 'fighting', 'flying', 'poison', 'ground', 'rock', 'bug', 'ghost', 'steel', 'fire', 'water', 'grass', 'electric', 'psychic', 'ice', 'dragon', 'dark', 'fairy'];
 
   const updateTypeChart = (newTeam) => {
+    for (let i = 0; i < 6; i++) {
+      if (newTeam[i] !== undefined) {
+        arrOfObj[i + 1] = newTeam[i].name;
+      } else {
+        arrOfObj[i + 1] = '-';
+      }
+    }
+
     for (let i = 0; i < typesArr.length; i++) {
-      arrOfObj.push(typesArr[i]);
-      arrOfObj.push(newTeam[0].resists[typesArr[i]]);
-      arrOfObj.push(0);
-      arrOfObj.push(0);
-      arrOfObj.push(0);
-      arrOfObj.push(0);
-      arrOfObj.push(0);
-      arrOfObj.push(0);
-      arrOfObj.push(0);
+      let weak = 0;
+      let resist = 0;
+      arrOfObj.push(capitalize(typesArr[i]));
+      for (let j = 0; j < 6; j++) {
+        if (newTeam[j] !== undefined) {
+          if (newTeam[j].resists[typesArr[i]] === 1) {
+            arrOfObj.push('-');
+          } else {
+            if (newTeam[j].resists[typesArr[i]] < 1) {
+              resist++;
+            } else if (newTeam[j].resists[typesArr[i]] > 1) {
+              weak++;
+            }
+            arrOfObj.push(newTeam[j].resists[typesArr[i]]);
+          }
+        } else {
+          arrOfObj.push('-');
+        }
+      }
+
+      weak === 0 ? arrOfObj.push('-') : arrOfObj.push(weak);
+      resist === 0 ? arrOfObj.push('-') : arrOfObj.push(resist);
     }
   };
 
@@ -143,45 +177,40 @@ const App = () => {
 
   const getTypeResists = (pokeType) => {
     let resists = types[pokeType[0]];
-    if (pokeType[1] !== undefined) {
+    if (pokeType[1] !== '') {
       resists = combineTypes(types[pokeType[0]], types[pokeType[1]]);
     }
     return resists;
   };
 
-  // add to pokemon type resist obj
-
-  // for (let i = 0; i < 18; i++) {
-  //   for (let j = 0; j < testRow.length; j++) {
-  //     arrOfObj.push(testRow[j]);
-  //   }
-  // }
-
   return (
-    <Router>
-      <div style={styles2.sidebar}>
-        <Sidebar />
-      </div>
-      <div style={styles2.content} className="content">
+    <div style={styles.parent}>
+      <Router>
+        <div style={styles2.sidebar}>
+          <Sidebar />
+        </div>
+        <div style={styles2.content} className="content">
 
-        <Switch>
-          <Route exact path="/">
-            <div style={styles.center}>
-              <h1>Pokedex</h1>
-            </div>
-            <SearchPokemon setPokemon={setActivePokemon} handleSearch={handleSearch} />
-            <TeamPreview teamMembers={teamMembers} handleRemovePokemon={handleRemovePokemon} />
-            <PokemonList pokemon={activePokemon} handleAddToTeam={handleAddToTeam} />
-          </Route>
-          <Route exact path="/weakness">
-            <div className="weakness">
-              <Weakness arrOfObj={arrOfObj} />
-            </div>
-          </Route>
-        </Switch>
+          <Switch>
+            <Route exact path="/">
+              <div style={styles.center}>
+                <img src="https://cdn2.bulbagarden.net/upload/4/4b/Pok%C3%A9dex_logo.png" /> <br></br>
+                <img width='60' height='60' src="https://yt3.ggpht.com/ytc/AAUvwnhN8gx40brxAD1igUT6osZYDY0clhmGze4oQIpn=s900-c-k-c0x00ffffff-no-rj"/>
+              </div>
+              <SearchPokemon setPokemon={setActivePokemon} handleSearch={handleSearch} />
+              <TeamPreview teamMembers={teamMembers} handleRemovePokemon={handleRemovePokemon} />
+              <PokemonList pokemon={activePokemon} handleAddToTeam={handleAddToTeam} />
+            </Route>
+            <Route exact path="/weakness">
+              <div className="weakness">
+                <Weakness arrOfObj={arrOfObj} />
+              </div>
+            </Route>
+          </Switch>
 
-      </div>
-    </Router>
+        </div>
+      </Router>
+    </div>
   );
 };
 
