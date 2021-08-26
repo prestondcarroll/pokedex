@@ -69,8 +69,8 @@ const Pokemon = (props) => {
     }
   }, [props.pokemon]);
 
-  const handleAddToTeam = (event) => {
-    props.handleAddToTeam(data.name);
+  const handleAddToTeam = (event, pokeType) => {
+    props.handleAddToTeam(data.name, type);
   };
 
   if (data !== '') {

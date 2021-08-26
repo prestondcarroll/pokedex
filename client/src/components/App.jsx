@@ -1,3 +1,5 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-use-before-define */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -6,6 +8,7 @@ import SearchPokemon from './SearchPokemon.jsx';
 import TeamPreview from './TeamPreview.jsx';
 import Sidebar from './Sidebar.jsx';
 import Weakness from './Weakness.jsx';
+import types from './helper/types.js';
 
 const axios = require('axios').default;
 
@@ -25,7 +28,6 @@ const styles = {
 const styles2 = {
   sidebar: {
     position: 'fixed',
-    height: '400px',
   },
   content: {
     marginLeft: '100px',
@@ -33,12 +35,6 @@ const styles2 = {
     position: 'relative',
     overflow: 'auto',
     zIndex: 1,
-  },
-  info: {
-    width: '1440px',
-    height: '300px',
-    position: 'relative',
-    background: '#f55',
   },
 };
 
@@ -70,13 +66,14 @@ const App = () => {
     }
   };
 
-  const handleAddToTeam = (name) => {
+  const handleAddToTeam = (name, pokeTypes) => {
     if (teamMembers.length === 6) {
       alert('Already 6 team members');
     } else {
       const newTeam = [...teamMembers];
       const id = pokemonList[name];
-      newTeam.push({ id, name: capitalize(name) });
+      const resists = getTypeResists(pokeTypes);
+      newTeam.push({ id, name: capitalize(name), resists });
       setTeamMembers(newTeam);
     }
   };
@@ -112,14 +109,53 @@ const App = () => {
       });
   }, []);
 
-  const arrOfObj = ['Move', 'Name1', 'Name2', 'Name3', 'Name4', 'Name5', 'Name6', 'Total Weak', 'Total Resis'];
-  const testRow = ['Type', 0, 0, 0, 0, 0, 0, 0, 0];
-
-  for (let i = 0; i < 18; i++) {
-    for (let j = 0; j < testRow.length; j++) {
-      arrOfObj.push(testRow[j]);
+  useEffect(() => {
+    if (teamMembers[0] !== undefined) {
+      updateTypeChart(teamMembers);
     }
-  }
+  }, [teamMembers]);
+
+  const arrOfObj = ['Move', 'Name1', 'Name2', 'Name3', 'Name4', 'Name5', 'Name6', 'Total Weak', 'Total Resis'];
+  // const testRow = ['Type', 0, 0, 0, 0, 0, 0, 0, 0];
+  const typesArr = ['normal', 'fighting', 'flying', 'poison', 'ground', 'rock', 'bug', 'ghost', 'steel', 'fire', 'water', 'grass', 'electric', 'psychic', 'ice', 'dragon', 'dark', 'fairy'];
+
+  const updateTypeChart = (newTeam) => {
+    for (let i = 0; i < typesArr.length; i++) {
+      arrOfObj.push(typesArr[i]);
+      arrOfObj.push(newTeam[0].resists[typesArr[i]]);
+      arrOfObj.push(0);
+      arrOfObj.push(0);
+      arrOfObj.push(0);
+      arrOfObj.push(0);
+      arrOfObj.push(0);
+      arrOfObj.push(0);
+      arrOfObj.push(0);
+    }
+  };
+
+  const combineTypes = (type1, type2) => {
+    const newObj = {};
+    Object.keys(type1).forEach((type) => {
+      newObj[type] = type1[type] * type2[type];
+    });
+    return newObj;
+  };
+
+  const getTypeResists = (pokeType) => {
+    let resists = types[pokeType[0]];
+    if (pokeType[1] !== undefined) {
+      resists = combineTypes(types[pokeType[0]], types[pokeType[1]]);
+    }
+    return resists;
+  };
+
+  // add to pokemon type resist obj
+
+  // for (let i = 0; i < 18; i++) {
+  //   for (let j = 0; j < testRow.length; j++) {
+  //     arrOfObj.push(testRow[j]);
+  //   }
+  // }
 
   return (
     <Router>
