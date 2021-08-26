@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable prefer-template */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Modal from 'react-modal';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,7 +12,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
-let types = {
+const types = {
   normal: '#c2c2a1',
   fighting: '#d6b591',
   flying: '#bab0d5',
@@ -50,6 +52,30 @@ const capitalize = (string) => {
 
 const Pokemon = (props) => {
   const [typeColor, setTypeColor] = useState('');
+  const [data, setData] = useState('');
+  const [type, setType] = useState('');
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const customStyles = {
+    content: {
+      height: 600,
+      width: 600,
+      marginTop: 100,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      background: `${typeColor}`,
+      borderRadius: 25,
+      borderStyle: 'outset',
+      fontFamily: 'Roboto',
+      color: 'white',
+    },
+    overlay: { zIndex: 1000 },
+    center: {
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  };
+
   const useStyles = makeStyles({
     card: {
       height: 250,
@@ -63,7 +89,6 @@ const Pokemon = (props) => {
       height: 100,
       width: '33%',
       marginLeft: '33%',
-
     },
     bullet: {
       display: 'inline-block',
@@ -83,11 +108,9 @@ const Pokemon = (props) => {
       color: 'white',
     },
   });
+
   const classes = useStyles();
   // const bull = <span className={classes.bullet}>•</span>;
-  const [data, setData] = useState('');
-  const [type, setType] = useState('');
-
 
   useEffect(() => {
     if (props.pokemon !== undefined && props.pokemon.id !== undefined) {
@@ -127,7 +150,42 @@ const Pokemon = (props) => {
         </CardContent>
         <CardActions className={classes.button}>
           <Button size="small" onClick={handleAddToTeam}>Add to team</Button>
+          <Button onClick={() => { setModalIsOpen(true); }}> Expand</Button>
         </CardActions>
+
+        <Modal style={customStyles} isOpen={modalIsOpen}>
+          <h2>{capitalize(data.name)}</h2>
+          <p>
+            {capitalize(type[0])}
+            {type[1] !== '' ? ' / ' + capitalize(type[1]) : ''}
+          </p>
+          <img
+            src={
+              data.id <= 649
+                ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id}.svg`
+                : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`
+            }
+          />
+          <p>
+            Height:
+            {data.height}
+          </p>
+          <p>
+            Weight:
+            {data.weight}
+          </p>
+          <p>
+            Abilities:
+            {data.abilities.map((element) => (
+              <li>{capitalize(element.ability.name)}</li>
+            ))}
+          </p>
+
+          <div>
+            <button onClick={() => setModalIsOpen(false)}>Close</button>
+          </div>
+        </Modal>
+
       </Card>
     );
   }
