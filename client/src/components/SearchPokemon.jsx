@@ -54,10 +54,23 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 const styles = {
   container: {
+    width: 350,
+    height: 55,
     display: 'flex',
     flex: 1,
     justifyContent: 'Center',
     alignItems: 'center',
+
+    background: 'white',
+    borderRadius: 5,
+    // // boxShadow: '5px 5px 5px black',
+    borderStyle: 'outset',
+
+    right: 0,
+    left: 0,
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    // marginTop: 40,
     // justifyContent: 'space-between',
   }
 };

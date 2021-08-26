@@ -6,18 +6,23 @@ import TeamMember from './TeamMember.jsx';
 const styles = {
   container: {
     width: 900,
+    height: 190,
     display: 'flex',
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
-    background: 'blue',
+    background: 'white',
+    borderRadius: 5,
+    // boxShadow: '5px 5px 5px black',
+    borderStyle: 'outset',
 
     right: 0,
     left: 0,
     marginRight: 'auto',
     marginLeft: 'auto',
+    marginTop: 40,
     // justifyContent: 'space-between',
   },
   item: {
@@ -36,10 +41,11 @@ const TeamPreview = (props) => {
 
   return (
     <div style={styles.parent}>
+      <h1> My Team</h1>
     <div key={props.teamMembers} style={styles.container}>
       {props.teamMembers.map((pokemon) => (
         <div style={styles.item}>
-          <TeamMember pokemon={pokemon} />
+          <TeamMember pokemon={pokemon} handleRemovePokemon={props.handleRemovePokemon} />
         </div>
       ))}
     </div>

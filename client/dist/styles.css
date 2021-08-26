@@ -1,5 +1,7 @@
 body {
-  background: url("https://i.imgur.com/mtKogYO.jpeg") repeat
+  background: url("https://i.imgur.com/mtKogYO.jpeg") repeat;
+  padding:0;
+  margin:0;
 }
 
 
