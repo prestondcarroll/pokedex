@@ -14,6 +14,11 @@ const Sidebar = (props) => {
     expanded ? setExpanded(false) : setExpanded(true);
   }
 
+  let empty = [];
+  for(let i = 0; i < 50; i++) {
+    empty.push('');
+  }
+
 
   return (
     <div>
@@ -30,6 +35,12 @@ const Sidebar = (props) => {
             Weakness
             <Link to="/weakness" />
           </MenuItem>
+          {empty.map((element) => {
+            return (<MenuItem />);
+          })}
+
+
+
           {/* <SubMenu title="Components" icon={<FaHeart />}>
             <MenuItem>Component 1</MenuItem>
             <MenuItem>Component 2</MenuItem>
