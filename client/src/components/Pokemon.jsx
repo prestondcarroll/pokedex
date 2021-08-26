@@ -68,11 +68,13 @@ const Pokemon = (props) => {
       borderStyle: 'outset',
       fontFamily: 'Roboto',
       color: 'white',
+      fontSize: 'large',
     },
     overlay: { zIndex: 1000 },
     center: {
-      marginLeft: 'auto',
-      marginRight: 'auto',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   };
 
@@ -154,18 +156,24 @@ const Pokemon = (props) => {
         </CardActions>
 
         <Modal style={customStyles} isOpen={modalIsOpen}>
+          <div style={customStyles.center}>
           <h2>{capitalize(data.name)}</h2>
+          </div>
+          <div style={customStyles.center}>
           <p>
             {capitalize(type[0])}
             {type[1] !== '' ? ' / ' + capitalize(type[1]) : ''}
           </p>
-          <img
-            src={
+          </div>
+          <div style={customStyles.center}>
+            <img
+              src={
               data.id <= 649
                 ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id}.svg`
                 : `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`
             }
-          />
+            />
+          </div>
           <p>
             Height:
             {data.height}
