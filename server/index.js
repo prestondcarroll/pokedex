@@ -38,7 +38,7 @@ app.get('/pokemonNums/', (req, res) => {
 
 app.get('/initial', (req, res) => {
   let strArr = [];
-  for (let i = 1; i <= 20; i++) {
+  for (let i = 1; i <= 52; i++) {
     strArr.push(`/api/v2/pokemon/${i}`);
   }
 
