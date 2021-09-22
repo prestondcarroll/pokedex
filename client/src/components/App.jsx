@@ -129,7 +129,6 @@ const App = () => {
   };
 
   const arrOfObj = ['Move', 'Name1', 'Name2', 'Name3', 'Name4', 'Name5', 'Name6', 'Weak', 'Resis'];
-  // const testRow = ['Type', 0, 0, 0, 0, 0, 0, 0, 0];
   const typesArr = ['normal', 'fighting', 'flying', 'poison', 'ground', 'rock', 'bug', 'ghost', 'steel', 'fire', 'water', 'grass', 'electric', 'psychic', 'ice', 'dragon', 'dark', 'fairy'];
 
   const updateTypeChart = (newTeam) => {

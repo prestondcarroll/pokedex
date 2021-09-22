@@ -24,8 +24,6 @@ const styles = {
 
 const PokemonList = (props) => {
 
-  const i = 1;
-
   if (props.pokemon.length === 0) {
     return (
       <div>

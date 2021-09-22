@@ -38,13 +38,6 @@ const Sidebar = (props) => {
           {empty.map((element) => {
             return (<MenuItem />);
           })}
-
-
-
-          {/* <SubMenu title="Components" icon={<FaHeart />}>
-            <MenuItem>Component 1</MenuItem>
-            <MenuItem>Component 2</MenuItem>
-          </SubMenu> */}
         </Menu>
       </ProSidebar>
     </div>

@@ -80,17 +80,20 @@ const Pokemon = (props) => {
 
   const useStyles = makeStyles({
     card: {
-      height: 250,
+      height: 255,
       width: 400,
       margin: 40,
       color: 'white',
       backgroundColor: `${typeColor}`,
+      paddingBottom: '0px',
 
     },
-    media: {
-      height: 100,
-      width: '33%',
-      marginLeft: '33%',
+    cardContent: {
+      paddingBottom: '0px',
+    },
+    media2: {
+      height: 140,
+      objectFit: 'scale-down',
     },
     bullet: {
       display: 'inline-block',
@@ -106,13 +109,15 @@ const Pokemon = (props) => {
     pos: {
       marginBottom: 12,
     },
-    button: {
+    actions: {
+      paddingTop: 0,
+    },
+    button2: {
       color: 'white',
     },
   });
 
   const classes = useStyles();
-  // const bull = <span className={classes.bullet}>•</span>;
 
   useEffect(() => {
     if (props.pokemon !== undefined && props.pokemon.id !== undefined) {
@@ -129,7 +134,7 @@ const Pokemon = (props) => {
   if (data !== '') {
     return (
       <Card className={classes.card}>
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           <Typography className={classes.title} color="textSecondary" gutterBottom>
             {capitalize(type[0])}
             {type[1] !== '' ? ' / ' + capitalize(type[1]) : ''}
@@ -141,7 +146,9 @@ const Pokemon = (props) => {
             {capitalize(data.name)}
           </Typography>
           <CardMedia
-            className={classes.media}
+            component="img"
+            alt="Pokemon"
+            className={classes.media2}
             image={
               data.id <= 649
                 ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id}.svg`
@@ -150,9 +157,9 @@ const Pokemon = (props) => {
             title={`${data.name}`}
           />
         </CardContent>
-        <CardActions className={classes.button}>
-          <Button size="small" onClick={handleAddToTeam}>Add to team</Button>
-          <Button onClick={() => { setModalIsOpen(true); }}> Expand</Button>
+        <CardActions className={classes.actions}>
+          <Button size="small" onClick={handleAddToTeam} className={classes.button2} >Add to team</Button>
+          <Button onClick={() => { setModalIsOpen(true); }} className={classes.button2}> Expand</Button>
         </CardActions>
 
         <Modal style={customStyles} isOpen={modalIsOpen}>

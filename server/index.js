@@ -27,7 +27,6 @@ app.get('/pokemonNums/', (req, res) => {
 
   P.resource(`/api/v2/pokemon/?limit=898`)
     .then((data) => {
-      // let test = 11;
       let resultObj = {};
       for (let i = 0; i < 898; i++) {
         resultObj[data.results[i].name] = i + 1;
